@@ -50,6 +50,34 @@ userRouter.post("/login", async(req,res)=>{
     }
 })
 
+userRouter.patch('/:id', async(req,res)=>{
+    let { id: _id } = req.params
+    let token = req.headers.tkn;
+    jwt.verify(token, process.env.key, async (err, decoded) => {
+        if (err) res.send({
+            message: "err: " + err,
+            status: 0,
+            error: true
+        })
+        try {
+            let { userId: user } = decoded
+            console.log('quantity', req.body, _id, user)
+            await CartModel.updateOne({ _id, user }, req.body)
+            res.send({
+                message: "Item updated",
+                status: 1,
+                error: false
+            })
+        } catch (err) {
+            res.send({
+                message: 'err: ' + err,
+                status: 0,
+                err: true
+            })
+        }
+    })
+})
+
 
 module.exports={
     userRouter
