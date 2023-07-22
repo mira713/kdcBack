@@ -2,7 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const {connection}= require('./config/db')
 const {userRouter} = require('./router/userRouter')
-// const {productRouter} = require('./Router/productRouter');
+const {PostRouter, postRouter} = require('./router/postRouter')
 // const {searchRouter} = require('./Router/searchRouter');
 // const {cartRouter} = require('./Router/cartRouter');
 const {authenticate} = require('./middleware/authenticate');
@@ -22,7 +22,7 @@ app.get('/',(req,res)=>{
 
 app.use('/users',userRouter)
 app.use(authenticate);
-// app.use('/product', productRouter)
+app.use("/post",postRouter)
 // app.use("/search",searchRouter)
 // app.use("/cart",cartRouter)
 

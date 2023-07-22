@@ -15,8 +15,8 @@ postRouter.get('/', (req, res) => {
         })
         let { userId: user } = decoded
         try {
-            let count = await CartModel.find({ user }).countDocuments();
-            let data = await CartModel.find({ user });
+            let count = await PostModel.find({ user }).countDocuments();
+            let data = await PostModel.find({ user });
             res.send({
                 message: "All cart data",
                 status: 1,
@@ -46,7 +46,7 @@ postRouter.get('/:pid', (req, res) => {
         let { userId: user } = decoded
         //console.log('set',user,pid)
         try {
-            let data = await CartModel.find({ user, _id: pid })
+            let data = await PostModel.find({ user, _id: pid })
             if (data.length > 0) {
                 res.send({
                     message: "Item already in cart",
@@ -83,7 +83,7 @@ postRouter.patch('/:id', async (req, res) => {
         try {
             let { userId: user } = decoded
             console.log('quantity', req.body, _id, user)
-            await CartModel.updateOne({ _id, user }, req.body)
+            await PostModel.updateOne({ _id, user }, req.body)
             res.send({
                 message: "Item updated",
                 status: 1,
@@ -110,7 +110,7 @@ postRouter.delete('/:id', async (req, res) => {
         })
         try {
             let { userId: user } = decoded
-            await CartModel.deleteOne({ _id, user })
+            await PostModel.deleteOne({ _id, user })
             res.send({
                 message: "err: " + err,
                 status: 1,
@@ -130,7 +130,7 @@ postRouter.post("/add", async(req, res) => {
 
     try {
         //console.log(req.body)
-        await CartModel.insertMany(req.body);
+        await PostModel.insertMany(req.body);
         res.send({
             message: "Item added in cart",
             status: 1,

@@ -6,7 +6,8 @@ const UserSchema = mongoose.Schema({
     location:{type:String},
     email : {type: String},
     password : {type : String||Number},
-    number : {type : Number}
+    number : {type : Number},
+    follow: {type:Number}
 },{
     versionKey : false
 })

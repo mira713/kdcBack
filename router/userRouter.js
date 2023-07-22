@@ -3,6 +3,7 @@ const userRouter = express.Router();
 const {UserModel} = require('../model/userModel');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const {authenticate} = require("../middleware/authenticate")
 require('dotenv').config();
 
 userRouter.get('/',async(req,res)=>{
@@ -50,6 +51,8 @@ userRouter.post("/login", async(req,res)=>{
     }
 })
 
+userRouter.use(authenticate);
+
 userRouter.patch('/:id', async(req,res)=>{
     let { id: _id } = req.params
     let token = req.headers.tkn;
@@ -61,8 +64,8 @@ userRouter.patch('/:id', async(req,res)=>{
         })
         try {
             let { userId: user } = decoded
-            console.log('quantity', req.body, _id, user)
-            await CartModel.updateOne({ _id, user }, req.body)
+            //console.log('quantity', req.body, _id, user)
+            await UserModel.findByIdAndUpdate({ _id }, req.body)
             res.send({
                 message: "Item updated",
                 status: 1,
