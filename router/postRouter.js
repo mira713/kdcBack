@@ -42,6 +42,7 @@ postRouter.get('/', (req, res) => {
             status: 0,
             error: true
         })
+        let {userId, user} = decoded
         try {
             let count = await PostModel.find({user}).countDocuments();
             let data = await PostModel.find({user});
