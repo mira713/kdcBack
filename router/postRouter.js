@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const { PostModel } = require('../model/postModel');
 require('dotenv').config();
 
-postRouter.get('/allPosts', (req, res) => {
+postRouter.get('/', (req, res) => {
     let token = req.headers.tkn
     let page = req.query.page || 0
     jwt.verify(token, process.env.key, async (err, decoded) => {
@@ -13,9 +13,10 @@ postRouter.get('/allPosts', (req, res) => {
             status: 0,
             error: true
         })
+        let { userId: user } = decoded
         try {
-            let count = await PostModel.find().countDocuments();
-            let data = await PostModel.find();
+            let count = await PostModel.find({ user }).countDocuments();
+            let data = await PostModel.find({ user });
             res.send({
                 message: "All cart data",
                 status: 1,
@@ -33,7 +34,7 @@ postRouter.get('/allPosts', (req, res) => {
     });
 })
 
-postRouter.get('/', (req, res) => {
+postRouter.get('/userPost', (req, res) => {
     let token = req.headers.tkn
     let page = req.query.page || 0
     jwt.verify(token, process.env.key, async (err, decoded) => {
@@ -42,10 +43,10 @@ postRouter.get('/', (req, res) => {
             status: 0,
             error: true
         })
-        let {userId, user} = decoded
+        let { userId: user } = decoded
         try {
-            let count = await PostModel.find({user}).countDocuments();
-            let data = await PostModel.find({user});
+            let count = await PostModel.find().countDocuments();
+            let data = await PostModel.find();
             res.send({
                 message: "All cart data",
                 status: 1,
