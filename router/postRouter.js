@@ -46,7 +46,7 @@ postRouter.get('/userPost', (req, res) => {
         let { userId: user } = decoded
         try {
             let count = await PostModel.find().countDocuments();
-            let data = await PostModel.find();
+            let data = await PostModel.find().skip(page*10).limit(10);
             res.send({
                 message: "All cart data",
                 status: 1,
