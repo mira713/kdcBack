@@ -2,9 +2,8 @@ const express = require('express');
 require('dotenv').config();
 const {connection}= require('./config/db')
 const {userRouter} = require('./router/userRouter')
-const {PostRouter, postRouter} = require('./router/postRouter')
-// const {searchRouter} = require('./Router/searchRouter');
-// const {cartRouter} = require('./Router/cartRouter');
+const {postRouter} = require('./router/postRouter')
+const {searchRouter} = require('./router/serchRouter');
 const {authenticate} = require('./middleware/authenticate');
 const cors = require('cors');
 const app = express();
@@ -23,7 +22,7 @@ app.get('/',(req,res)=>{
 app.use('/users',userRouter)
 app.use(authenticate);
 app.use("/post",postRouter)
-// app.use("/search",searchRouter)
+app.use("/search",searchRouter)
 // app.use("/cart",cartRouter)
 
 app.listen(process.env.port,async()=>{

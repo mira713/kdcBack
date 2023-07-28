@@ -68,7 +68,7 @@ searchRouter.get('/item/:key',async(req,res)=>{
   let data = await PostModel.find(
     {
       "$or":[
-        {name:{$regex:new RegExp(`${req.params.key}`, `i`)}}
+        {title:{$regex:new RegExp(`${req.params.key}`, `i`)}}
       ]
     }
   )
